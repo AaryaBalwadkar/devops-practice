@@ -1,0 +1,20 @@
+---
+- name: Validate local MiniPay capstone environment file
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Read generated environment file
+      ansible.builtin.command: cat capstone.env
+      register: env_output
+      changed_when: false
+
+    - name: Display environment file
+      ansible.builtin.debug:
+        var: env_output.stdout_lines
+
+    - name: Confirm expected gateway URL exists
+      ansible.builtin.assert:
+        that:
+          - "'PAYMENT_GATEWAY_URL=http://localhost:30099' in env_output.stdout"
+          - "'STATUS=DEPLOYED' in env_output.stdout"

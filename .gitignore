@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.venv/
+.terraform/
+.terraform.lock.hcl
+capstone.env
